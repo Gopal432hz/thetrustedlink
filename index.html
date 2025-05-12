@@ -21,7 +21,7 @@
     <p class="description">
       A verified referral network for hiring, partnerships, and outreach — built on trust and real connections.
     </p>
-  
+    <form action="https://formspree.io/f/xwporqzb" method="POST" onsubmit="redirectToThanks()">
       <label for="name">Full Name</label>
       <input type="text" id="name" name="name" required>
 
@@ -46,6 +46,13 @@
       <button type="submit">Create My Profile</button>
     </form>
   </div>
-  <form action="https://formspree.io/f/xwporqzb" method="POST" onsubmit="redirectToThanks()">
+
+  <script>
+    function redirectToThanks() {
+      setTimeout(() => {
+        window.location.href = "thankyou.html";
+      }, 500);
+    }
+  </script>
 </body>
 </html>
