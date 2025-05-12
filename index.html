@@ -5,46 +5,121 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Trusted Link</title>
   <style>
-    body { font-family: sans-serif; background: #f4f4f9; margin: 0; padding: 0; }
-    .container { max-width: 600px; margin: 50px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    h1 { text-align: center; color: #222; }
-    p.description { text-align: center; color: #555; }
-    label { display: block; margin-top: 15px; font-weight: bold; }
-    input, textarea { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 6px; }
-    button { margin-top: 20px; width: 100%; padding: 12px; background-color: #2a72de; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; }
-    button:hover { background-color: #1f5ec3; }
+    body {
+      font-family: sans-serif;
+      background: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+    }
+
+    .left {
+      flex: 1;
+      background: url('BG') no-repeat center center/cover;
+    }
+
+    .right {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f4f4f9;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 500px;
+      background: white;
+      padding: 30px;
+      border-radius: 25px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #222;
+    }
+
+    p.description {
+      text-align: center;
+      color: #555;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #2a72de;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #1f5ec3;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+      .left {
+        height: 200px;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>The Trusted Link</h1>
-    <p class="description">
-      A verified referral network for hiring, partnerships, and outreach — built on trust and real connections.
-    </p>
-    <form action="https://formspree.io/f/xwporqzb" method="POST">
-      <label for="name">Full Name</label>
-      <input type="text" id="name" name="name" required>
+  <div class="left"></div>
+  <div class="right">
+    <div class="container">
+      <h1>The Trusted Link</h1>
+      <p class="description">
+        A verified referral network for hiring, partnerships, and outreach — built on trust and real connections.
+      </p>
+      <form action="https://formspree.io/f/xwporqzb" method="POST">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required />
 
-      <label for="email">Email Address</label>
-      <input type="email" id="email" name="email" required>
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required />
 
-      <label for="linkedin">LinkedIn Profile</label>
-      <input type="url" id="linkedin" name="linkedin">
+        <label for="linkedin">LinkedIn Profile</label>
+        <input type="url" id="linkedin" name="linkedin" />
 
-      <label for="role">Current Role</label>
-      <input type="text" id="role" name="role">
+        <label for="role">Current Role</label>
+        <input type="text" id="role" name="role" />
 
-      <label for="company">Company</label>
-      <input type="text" id="company" name="company">
+        <label for="company">Company</label>
+        <input type="text" id="company" name="company" />
 
-      <label for="bio">Short Bio / About You</label>
-      <textarea id="bio" name="bio" rows="4"></textarea>
+        <label for="bio">Short Bio / About You</label>
+        <textarea id="bio" name="bio" rows="4"></textarea>
 
-      <label for="invite">Referral Code (if any)</label>
-      <input type="text" id="invite" name="invite">
+        <label for="invite">Referral Code (if any)</label>
+        <input type="text" id="invite" name="invite" />
 
-      <button type="submit">Create My Profile</button>
-    </form>
+        <button type="submit">Create My Profile</button>
+      </form>
+    </div>
   </div>
 </body>
 </html>
