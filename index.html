@@ -21,7 +21,7 @@
     <p class="description">
       A verified referral network for hiring, partnerships, and outreach — built on trust and real connections.
     </p>
-    <form action="https://formspree.io/f/xwporqzb" method="POST" onsubmit="redirectToThanks(event)">
+    <form action="https://formspree.io/f/xwporqzb" method="POST" onsubmit="return redirectToThanks(event)">
       <label for="name">Full Name</label>
       <input type="text" id="name" name="name" required>
 
@@ -48,27 +48,26 @@
   </div>
 
   <script>
-  function redirectToThanks(event) {
-    event.preventDefault(); // stop the default form action
-    const form = event.target;
+    function redirectToThanks(event) {
+      event.preventDefault();
+      const form = event.target;
 
-    fetch(form.action, {
-      method: 'POST',
-      body: new FormData(form),
-      headers: {
-        'Accept': 'application/json'
-      }
-    }).then(response => {
-      if (response.ok) {
-        window.location.href = "thankyou.html";
-      } else {
-        alert("Form submission failed. Please try again.");
-      }
-    });
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(response => {
+        if (response.ok) {
+          window.location.href = "thankyou.html";
+        } else {
+          alert("Form submission failed. Please try again.");
+        }
+      });
 
-    return false; // prevent default again
-  }
-</script>
-
+      return false;
+    }
+  </script>
 </body>
 </html>
