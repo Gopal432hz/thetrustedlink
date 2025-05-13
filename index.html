@@ -98,9 +98,9 @@
       <p class="description">
         A verified referral network for hiring, partnerships, and outreach — built on trust and real connections.
       </p>
-      <form action="https://formspree.io/f/xwporqzb" method="POST">
+      <form id="profileForm">
         <label for="name">Full Name</label>
-        <input type="text" id="name" name="name" required />
+        <input type="text" id="name" name="fullName" required />
 
         <label for="email">Email Address</label>
         <input type="email" id="email" name="email" required />
@@ -118,11 +118,59 @@
         <textarea id="bio" name="bio" rows="4"></textarea>
 
         <label for="invite">Referral Code (if any)</label>
-        <input type="text" id="invite" name="invite" />
+        <input type="text" id="invite" name="referral" />
 
         <button type="submit">Create My Profile</button>
       </form>
     </div>
   </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAHBp0WNKNRJNoTanDsh9BaDrKNGVouLEs",
+      authDomain: "the-trusted-link.firebaseapp.com",
+      projectId: "the-trusted-link",
+      storageBucket: "the-trusted-link.appspot.com",
+      messagingSenderId: "110160882414",
+      appId: "1:110160882414:web:e1871feef034c49361a1ff"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    document.getElementById("profileForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const fullName = document.querySelector("[name='fullName']").value;
+      const email = document.querySelector("[name='email']").value;
+      const linkedin = document.querySelector("[name='linkedin']").value;
+      const role = document.querySelector("[name='role']").value;
+      const company = document.querySelector("[name='company']").value;
+      const bio = document.querySelector("[name='bio']").value;
+      const referral = document.querySelector("[name='referral']").value;
+
+      try {
+        await db.collection("profiles").add({
+          fullName,
+          email,
+          linkedin,
+          role,
+          company,
+          bio,
+          referral,
+          timestamp: new Date()
+        });
+        alert("Profile submitted successfully!");
+        document.getElementById("profileForm").reset();
+      } catch (err) {
+        console.error("Error adding document: ", err);
+        alert("Something went wrong. Try again.");
+      }
+    });
+  </script>
 </body>
 </html>
