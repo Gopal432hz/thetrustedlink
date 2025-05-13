@@ -154,7 +154,8 @@
       const referral = document.querySelector("[name='referral']").value;
 
       try {
-        await db.collection("profiles").add({
+       console.log("Submitting to Firebase...");
+ await db.collection("profiles").add({
           fullName,
           email,
           linkedin,
