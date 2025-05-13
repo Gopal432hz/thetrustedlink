@@ -32,12 +32,33 @@
     }
 
     .sidebar h2 {
-      margin: 0;
+      margin: 10px 0 5px;
+      text-transform: capitalize;
     }
 
     .sidebar p {
       margin: 5px 0;
       text-align: center;
+    }
+
+    .status {
+      margin-top: 10px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      background-color: #ffeeba;
+      color: #8a6d3b;
+    }
+
+    .edit-button {
+      margin-top: 20px;
+      padding: 10px 18px;
+      font-size: 14px;
+      border-radius: 8px;
+      background-color: #2a72de;
+      color: white;
+      border: none;
+      cursor: pointer;
     }
 
     .main {
@@ -55,6 +76,7 @@
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.05);
       max-width: 600px;
+      margin-bottom: 40px;
     }
 
     .invite-box input {
@@ -64,15 +86,34 @@
       border-radius: 8px;
       border: 1px solid #ccc;
     }
+
+    .profile-info {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      max-width: 600px;
+    }
+
+    .profile-info p {
+      margin-bottom: 10px;
+    }
+
+    .profile-info a {
+      color: #2a72de;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
 
   <div class="sidebar">
-    <img src="https://ui-avatars.com/api/?name=Gopal+Gupta&background=2a72de&color=fff" alt="Profile Photo" id="avatar" />
+    <img src="" alt="Profile Photo" id="avatar" />
     <h2 id="name">...</h2>
     <p id="role">...</p>
     <p id="company">...</p>
+    <div class="status" id="status">Pending Verification</div>
+    <button class="edit-button" onclick="alert('Edit feature coming soon')">Edit Profile</button>
   </div>
 
   <div class="main">
@@ -81,9 +122,15 @@
       <p>Start building your trusted network by adding people from LinkedIn or by email.</p>
       <input type="text" placeholder="LinkedIn URL or Email (feature coming soon)" disabled />
     </div>
+
+    <div class="profile-info">
+      <h3>Profile Details</h3>
+      <p><strong>Bio:</strong> <span id="bio">...</span></p>
+      <p><strong>LinkedIn:</strong> <a id="linkedin" href="#" target="_blank">View Profile</a></p>
+      <p><strong>Referral Code:</strong> <span id="referral">...</span></p>
+    </div>
   </div>
 
-  <!-- Firebase Script -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -100,7 +147,6 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // get email from URL
     const urlParams = new URLSearchParams(window.location.search);
     const email = urlParams.get('email');
 
@@ -109,9 +155,22 @@
       getDocs(q).then(snapshot => {
         if (!snapshot.empty) {
           const data = snapshot.docs[0].data();
+
           document.getElementById("name").innerText = data.fullName || "";
           document.getElementById("role").innerText = data.role || "";
           document.getElementById("company").innerText = data.company || "";
+          document.getElementById("bio").innerText = data.bio || "Not provided";
+          document.getElementById("referral").innerText = data.referral || "None";
+
+          const avatarName = (data.fullName || "User").split(" ").join("+");
+          document.getElementById("avatar").src = `https://ui-avatars.com/api/?name=${avatarName}&background=2a72de&color=fff`;
+
+          const linkedIn = data.linkedin || "#";
+          document.getElementById("linkedin").href = linkedIn;
+
+          // OPTIONAL: check for future "status" field from DB
+          // document.getElementById("status").innerText = data.status || "Pending Verification";
+
         } else {
           alert("Profile not found.");
         }
