@@ -126,8 +126,53 @@
   </div>
 
   <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+ <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAHBp0WNKNRJNoTanDsh9BaDrKNGVouLEs",
+    authDomain: "the-trusted-link.firebaseapp.com",
+    projectId: "the-trusted-link",
+    storageBucket: "the-trusted-link.appspot.com",
+    messagingSenderId: "110160882414",
+    appId: "1:110160882414:web:e1871feef034c49361a1ff"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  document.getElementById("profileForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const fullName = document.querySelector("[name='fullName']").value;
+    const email = document.querySelector("[name='email']").value;
+    const linkedin = document.querySelector("[name='linkedin']").value;
+    const role = document.querySelector("[name='role']").value;
+    const company = document.querySelector("[name='company']").value;
+    const bio = document.querySelector("[name='bio']").value;
+    const referral = document.querySelector("[name='referral']").value;
+
+    try {
+      await addDoc(collection(db, "profiles"), {
+        fullName,
+        email,
+        linkedin,
+        role,
+        company,
+        bio,
+        referral,
+        timestamp: new Date()
+      });
+      alert("Profile submitted successfully!");
+      document.getElementById("profileForm").reset();
+    } catch (err) {
+      console.error("Error adding document: ", err);
+      alert("Something went wrong. Please try again.");
+    }
+  });
+</script>
+
 
   <script>
     const firebaseConfig = {
