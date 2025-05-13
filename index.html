@@ -164,7 +164,7 @@
           referral,
           timestamp: new Date()
         });
-        alert("Profile submitted successfully!");
+        window.location.href = "thankyou.html";
         document.getElementById("profileForm").reset();
       } catch (err) {
         console.error("Error adding document: ", err);
