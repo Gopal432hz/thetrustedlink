@@ -113,29 +113,32 @@
 
   <!-- Firebase Logic -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyAHBp0WNKNRJNoTanDsh9BaDrKNGVouLEs",
-      authDomain: "the-trusted-link.firebaseapp.com",
-      projectId: "the-trusted-link",
-      storageBucket: "the-trusted-link.appspot.com",
-      messagingSenderId: "110160882414",
-      appId: "1:110160882414:web:e1871feef034c49361a1ff"
-    };
+  const firebaseConfig = {
+    apiKey: "AIzaSyAHBp0WNKNRJNoTanDsh9BaDrKNGVouLEs",
+    authDomain: "the-trusted-link.firebaseapp.com",
+    projectId: "the-trusted-link",
+    storageBucket: "the-trusted-link.appspot.com",
+    messagingSenderId: "110160882414",
+    appId: "1:110160882414:web:e1871feef034c49361a1ff"
+  };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-    document.getElementById("createForm").addEventListener("submit", async (e) => {
+  // ✅ Wait for DOM to fully load before adding event listener
+  window.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById("createForm");
+
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const form = e.target;
       const data = {
         fullName: form.fullName.value,
         email: form.email.value,
-        password: form.password.value,  // Stored in Firestore (temp)
+        password: form.password.value,
         linkedin: form.linkedin.value,
         role: form.role.value,
         company: form.company.value,
@@ -147,10 +150,12 @@
         await addDoc(collection(db, "profiles"), data);
         window.location.href = `home.html?email=${encodeURIComponent(data.email)}`;
       } catch (err) {
+        console.error("Error adding document:", err);
         alert("Something went wrong. Please try again.");
-        console.error(err);
       }
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
