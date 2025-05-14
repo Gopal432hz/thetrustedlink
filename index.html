@@ -5,101 +5,78 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The Trusted Link</title>
   <style>
-  * {
-    box-sizing: border-box;
-  }
-
-  body {
-    margin: 0;
-    font-family: sans-serif;
-    display: flex;
-    height: 100vh;
-  }
-
-  .left {
-    flex: 1;
-    background: url('BG.png') no-repeat center center;
-    background-size: cover;
-  }
-
-  .right {
-    width: 40%;
-    background: white;
-    padding: 60px 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    position: relative;
-  }
-
-  .right img {
-    position: absolute;
-    top: 30px;
-    right: 30px;
-    width: 60px;
-  }
-
-  .right h1 {
-    margin: 0 0 10px 0;
-    font-size: 22px;
-  }
-
-  .right p {
-    color: #444;
-    font-size: 14px;
-    margin: 0 0 40px 0;
-    max-width: 300px;
-  }
-
-  .buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-    max-width: 280px;
-  }
-
-  .buttons button {
-    padding: 12px 20px;
-    border-radius: 20px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    transition: background 0.2s;
-  }
-
-  .primary {
-    background: #2a72de;
-    color: white;
-  }
-
-  .primary:hover {
-    background: #1750a8;
-  }
-
-  .secondary {
-    background: #eeeeee;
-    color: #333;
-  }
-
-  .secondary:hover {
-    background: #ddd;
-  }
-</style>
-
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      display: flex;
+      height: 100vh;
+    }
+    .left {
+      flex: 1;
+      background-image: url('BG.png'); /* Make sure BG.png exists */
+      background-size: cover;
+      background-position: center;
+    }
+    .right {
+      width: 40%;
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      background: white;
+      position: relative;
+    }
+    .logo {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      width: 50px;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    p {
+      max-width: 300px;
+      margin-bottom: 40px;
+      font-size: 14px;
+      color: #555;
+    }
+    .btn {
+      padding: 12px 20px;
+      border-radius: 20px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 10px;
+      width: 220px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-primary {
+      background-color: #2a72de;
+      color: white;
+    }
+    .btn-secondary {
+      background-color: #d9d9d9;
+      color: black;
+    }
+  </style>
 </head>
 <body>
   <div class="left"></div>
   <div class="right">
-    <img src="logo.png" alt="Logo" />
+    <img class="logo" src="logo.png" alt="Logo" />
     <h1>The Trusted Link</h1>
-    <p>A verified referral network for hiring, partnerships, and outreach — built on trust and real connections.</p>
-    <div class="buttons">
-      <button class="primary" onclick="location.href='login.html'">Login to existing account</button>
-      <button class="secondary" onclick="location.href='signup.html'">Create an account</button>
-    </div>
+    <p>
+      A verified referral network for hiring, partnerships, and outreach — built on trust and real connections.
+    </p>
+    <a href="login.html" class="btn btn-primary">Login to Existing Account</a>
+    <a href="create.html" class="btn btn-secondary">Create an Account</a>
   </div>
 </body>
 </html>
