@@ -1,41 +1,156 @@
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Trusted Link</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyAHBp0WNKNRJNoTanDsh9BaDrKNGVouLEs",
-    authDomain: "the-trusted-link.firebaseapp.com",
-    projectId: "the-trusted-link",
-    storageBucket: "the-trusted-link.appspot.com",
-    messagingSenderId: "110160882414",
-    appId: "1:110160882414:web:e1871feef034c49361a1ff"
-  };
+    .left {
+      flex: 1;
+      background: url('BG.png') no-repeat center center/cover;
+    }
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+    .right {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f4f4f9;
+    }
 
-  // ✅ This matches your actual form ID
-  document.getElementById("createForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
+    .container {
+      width: 90%;
+      max-width: 500px;
+      background: white;
+      padding: 30px;
+      border-radius: 25px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
 
-    const form = e.target;
-    const data = {
-      fullName: form.fullName.value,
-      email: form.email.value,
-      linkedin: form.linkedin.value,
-      role: form.role.value,
-      company: form.company.value,
-      bio: form.bio.value,
-      referral: form.referral.value,
-      timestamp: new Date()
+    .container h1 {
+      text-align: center;
+      color: #222;
+      margin-bottom: 10px;
+    }
+
+    .container p.description {
+      text-align: center;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #2a72de;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #1f5ec3;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+      .left {
+        height: 200px;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="left"></div>
+  <div class="right">
+    <div class="container">
+      <h1>The Trusted Link</h1>
+      <p class="description">
+        A verified referral network for hiring, partnerships, and outreach — built on trust and real connections.
+      </p>
+      <form id="createForm">
+        <input name="fullName" type="text" placeholder="Full Name" required />
+        <input name="email" type="email" placeholder="Email Address" required />
+        <input name="password" type="password" placeholder="Create Password" required />
+        <input name="linkedin" type="url" placeholder="LinkedIn Profile" />
+        <input name="role" type="text" placeholder="Current Role" />
+        <input name="company" type="text" placeholder="Company" />
+        <textarea name="bio" placeholder="Short Bio / About You"></textarea>
+        <button type="submit">Become a Trusted Node</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Firebase Logic -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAHBp0WNKNRJNoTanDsh9BaDrKNGVouLEs",
+      authDomain: "the-trusted-link.firebaseapp.com",
+      projectId: "the-trusted-link",
+      storageBucket: "the-trusted-link.appspot.com",
+      messagingSenderId: "110160882414",
+      appId: "1:110160882414:web:e1871feef034c49361a1ff"
     };
 
-    try {
-      await addDoc(collection(db, "profiles"), data);
-      window.location.href = `home.html?email=${encodeURIComponent(data.email)}`;
-    } catch (err) {
-      console.error("Error adding document:", err);
-      alert("Something went wrong. Please try again.");
-    }
-  });
-</script>
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    document.getElementById("createForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const form = e.target;
+      const data = {
+        fullName: form.fullName.value,
+        email: form.email.value,
+        password: form.password.value,  // Stored in Firestore (temp)
+        linkedin: form.linkedin.value,
+        role: form.role.value,
+        company: form.company.value,
+        bio: form.bio.value,
+        timestamp: new Date()
+      };
+
+      try {
+        await addDoc(collection(db, "profiles"), data);
+        window.location.href = `home.html?email=${encodeURIComponent(data.email)}`;
+      } catch (err) {
+        alert("Something went wrong. Please try again.");
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
