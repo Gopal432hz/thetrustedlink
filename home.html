@@ -61,6 +61,13 @@
       border-radius: 6px;
       word-break: break-word;
       text-align: center;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+    .referral-box.show {
+      display: block;
+      opacity: 1;
     }
     .main {
       flex: 1;
@@ -112,7 +119,7 @@
     <p>✅ Verified by 3 trusted nodes</p>
     <button id="editBtn">Edit Profile</button>
     <button class="secondary" onclick="copyReferral()">Copy Trusted Profile Link</button>
-    <div class="referral-box" id="referralLinkBox" style="display:none;"></div>
+    <div class="referral-box" id="referralLinkBox"></div>
     <button class="secondary" onclick="logout()">Logout</button>
   </div>
 
@@ -129,6 +136,18 @@
     <div id="tab-network" class="tab-content">Your verified connections will appear here.</div>
     <div id="tab-connected" class="tab-content" style="display:none;">Connected users shown here.</div>
     <div id="tab-requests" class="tab-content" style="display:none;">Trust requests will be displayed here.</div>
+  </div>
+
+  <!-- Edit Profile Modal -->
+  <div id="editModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:9999;">
+    <div style="background:white; padding:30px; border-radius:12px; width:90%; max-width:400px;">
+      <h3>Edit Profile</h3>
+      <input id="editName" type="text" placeholder="Full Name" style="width:100%; margin:10px 0; padding:8px;" />
+      <input id="editRole" type="text" placeholder="Role" style="width:100%; margin:10px 0; padding:8px;" />
+      <input id="editCompany" type="text" placeholder="Company" style="width:100%; margin:10px 0; padding:8px;" />
+      <textarea id="editBio" placeholder="Short Bio / About You" style="width:100%; margin:10px 0; padding:8px;"></textarea>
+      <button id="saveProfile" style="padding:10px 16px; background:#2a72de; color:white; border:none; border-radius:6px;">Save Changes</button>
+    </div>
   </div>
 
   <script type="module">
@@ -165,6 +184,11 @@
           document.getElementById("company").innerText = data.company || "";
           document.getElementById("bio").innerText = data.bio || "";
           document.getElementById("avatar").src = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.fullName)}&background=2a72de&color=fff`;
+
+          document.getElementById("editName").value = data.fullName || "";
+          document.getElementById("editRole").value = data.role || "";
+          document.getElementById("editCompany").value = data.company || "";
+          document.getElementById("editBio").value = data.bio || "";
         } else {
           alert("Profile not found.");
         }
@@ -176,7 +200,27 @@
       window.location.href = "login.html";
     }
 
-    // Tab switching
+    document.getElementById("editBtn").addEventListener("click", () => {
+      document.getElementById("editModal").style.display = "flex";
+    });
+
+    document.getElementById("saveProfile").addEventListener("click", async () => {
+      if (!profileId) return;
+      const ref = doc(db, "profiles", profileId);
+      const updated = {
+        fullName: document.getElementById("editName").value,
+        role: document.getElementById("editRole").value,
+        company: document.getElementById("editCompany").value,
+        bio: document.getElementById("editBio").value,
+      };
+      try {
+        await updateDoc(ref, updated);
+        window.location.reload();
+      } catch (err) {
+        console.error("Error updating profile:", err);
+      }
+    });
+
     const tabs = document.querySelectorAll(".tab");
     const contents = document.querySelectorAll(".tab-content");
     tabs.forEach(tab => {
@@ -189,34 +233,21 @@
       });
     });
 
-    // Logout function
     window.logout = function () {
       localStorage.removeItem("email");
       window.location.href = "index.html";
     }
 
-    // Copy referral link
     window.copyReferral = function () {
       if (!email) return;
       const link = `https://thetrustedlink.com/create.html?referrer=${encodeURIComponent(email)}`;
       navigator.clipboard.writeText(link).then(() => {
         const box = document.getElementById("referralLinkBox");
-        box.style.display = "block";
+        box.classList.add("show");
         box.innerText = "Copied: " + link;
+        setTimeout(() => box.classList.remove("show"), 3000);
       });
     }
   </script>
-  <!-- Edit Profile Modal -->
-<div id="editModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:9999;">
-  <div style="background:white; padding:30px; border-radius:12px; width:90%; max-width:400px;">
-    <h3>Edit Profile</h3>
-    <input id="editName" type="text" placeholder="Full Name" style="width:100%; margin:10px 0; padding:8px;" />
-    <input id="editRole" type="text" placeholder="Role" style="width:100%; margin:10px 0; padding:8px;" />
-    <input id="editCompany" type="text" placeholder="Company" style="width:100%; margin:10px 0; padding:8px;" />
-    <textarea id="editBio" placeholder="Short Bio / About You" style="width:100%; margin:10px 0; padding:8px;"></textarea>
-    <button id="saveProfile" style="padding:10px 16px; background:#2a72de; color:white; border:none; border-radius:6px;">Save Changes</button>
-  </div>
-</div>
-
 </body>
 </html>
