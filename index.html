@@ -5,77 +5,78 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The Trusted Link</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: sans-serif;
       display: flex;
       height: 100vh;
     }
+
     .left {
-      width: 50%;
+      flex: 1;
       background: url('BG.png') no-repeat center center;
       background-size: cover;
     }
+
     .right {
-      width: 50%;
-      background-color: #fff;
+      width: 40%;
+      background: white;
       padding: 60px 40px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       position: relative;
     }
-    .logo {
+
+    .right img {
       position: absolute;
-      top: 40px;
-      right: 40px;
+      top: 30px;
+      right: 30px;
       width: 60px;
     }
-    h1 {
-      font-size: 24px;
-      margin-bottom: 8px;
+
+    .right h1 {
+      margin-bottom: 10px;
     }
-    p {
-      color: #555;
+
+    .right p {
+      color: #444;
       font-size: 14px;
-      margin-bottom: 40px;
-      max-width: 300px;
     }
-    .btn {
+
+    .buttons {
+      margin-top: 30px;
+    }
+
+    .buttons button {
       padding: 12px 20px;
+      margin-right: 10px;
       border-radius: 20px;
       border: none;
       cursor: pointer;
-      font-weight: bold;
-      margin-bottom: 15px;
-      width: 200px;
+      font-size: 14px;
     }
-    .btn-primary {
-      background-color: #2a72de;
+
+    .primary {
+      background: #2a72de;
       color: white;
     }
-    .btn-secondary {
-      background-color: #e0e0e0;
-      color: #333;
+
+    .secondary {
+      background: #eee;
     }
   </style>
 </head>
 <body>
-
   <div class="left"></div>
-
   <div class="right">
-    <img src="logo.png" alt="Logo" class="logo" />
+    <img src="logo.png" alt="Logo" />
     <h1>The Trusted Link</h1>
     <p>A verified referral network for hiring, partnerships, and outreach — built on trust and real connections.</p>
-
-    <a href="login.html"><button class="btn btn-primary">Login to Existing Account</button></a>
-    <a href="newuser.html"><button class="btn btn-secondary">Create an Account</button></a>
+    <div class="buttons">
+      <button class="primary" onclick="location.href='login.html'">Login to existing account</button>
+      <button class="secondary" onclick="location.href='signup.html'">Create an account</button>
+    </div>
   </div>
-
 </body>
 </html>
-
