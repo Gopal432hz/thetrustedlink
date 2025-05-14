@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Your Trusted Network</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       font-family: sans-serif;
@@ -113,10 +111,11 @@
 </head>
 <body>
   <div class="sidebar">
-    <img src="https://ui-avatars.com/api/?name=John+Doe" alt="Profile" />
-    <h2>John Doe</h2>
-    <p>Head of Product at Company</p>
-    <p>Experienced leader in tech</p>
+    <img id="avatar" src="" alt="Profile Photo" />
+    <h2 id="name">Loading...</h2>
+    <p id="role">Loading...</p>
+    <p id="company">Loading...</p>
+    <p id="bio">Loading...</p>
     <p>✅ Verified by 3 trusted nodes</p>
     <button>Edit Profile</button>
     <button class="secondary">Copy Trusted Profile Link</button>
@@ -138,5 +137,46 @@
       <p>Growth tools — Coming soon</p>
     </div>
   </div>
+
+  <!-- Firebase Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAHBp0WNKNRJNoTanDsh9BaDrKNGVouLEs",
+      authDomain: "the-trusted-link.firebaseapp.com",
+      projectId: "the-trusted-link",
+      storageBucket: "the-trusted-link.appspot.com",
+      messagingSenderId: "110160882414",
+      appId: "1:110160882414:web:e1871feef034c49361a1ff"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const email = urlParams.get('email');
+
+    if (email) {
+      const q = query(collection(db, "profiles"), where("email", "==", email));
+      getDocs(q).then(snapshot => {
+        if (!snapshot.empty) {
+          const data = snapshot.docs[0].data();
+          document.getElementById("name").innerText = data.fullName || "Name";
+          document.getElementById("role").innerText = data.role || "";
+          document.getElementById("company").innerText = data.company || "";
+          document.getElementById("bio").innerText = data.bio || "";
+          document.getElementById("avatar").src = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.fullName)}&background=2a72de&color=fff`;
+        } else {
+          alert("Profile not found.");
+        }
+      }).catch(err => {
+        console.error("Error fetching profile:", err);
+      });
+    } else {
+      alert("No email provided.");
+    }
+  </script>
 </body>
 </html>
