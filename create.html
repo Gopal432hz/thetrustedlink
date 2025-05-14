@@ -98,30 +98,17 @@
       <p class="description">
         A verified referral network for hiring, partnerships, and outreach — built on trust and real connections.
       </p>
-      <form id="profileForm">
-        <label for="name">Full Name</label>
-        <input type="text" id="name" name="fullName" required />
+      <form id="createForm">
+  <input name="fullName" type="text" placeholder="Full Name" required />
+  <input name="email" type="email" placeholder="Email Address" required />
+  <input name="linkedin" type="url" placeholder="LinkedIn Profile" />
+  <input name="role" type="text" placeholder="Current Role" />
+  <input name="company" type="text" placeholder="Company" />
+  <textarea name="bio" placeholder="Short Bio / About You"></textarea>
+  <input name="referral" type="text" placeholder="Referral Code (if any)" />
+  <button type="submit">Become a Trusted Node</button>
+</form>
 
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" required />
-
-        <label for="linkedin">LinkedIn Profile</label>
-        <input type="url" id="linkedin" name="linkedin" />
-
-        <label for="role">Current Role</label>
-        <input type="text" id="role" name="role" />
-
-        <label for="company">Company</label>
-        <input type="text" id="company" name="company" />
-
-        <label for="bio">Short Bio / About You</label>
-        <textarea id="bio" name="bio" rows="4"></textarea>
-
-        <label for="invite">Referral Code (if any)</label>
-        <input type="text" id="invite" name="referral" />
-
-        <button type="submit">Create My Profile</button>
-      </form>
     </div>
   </div>
 
