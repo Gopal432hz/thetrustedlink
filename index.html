@@ -5,67 +5,90 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The Trusted Link</title>
   <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      display: flex;
-      height: 100vh;
-    }
+  * {
+    box-sizing: border-box;
+  }
 
-    .left {
-      flex: 1;
-      background: url('BG.png') no-repeat center center;
-      background-size: cover;
-    }
+  body {
+    margin: 0;
+    font-family: sans-serif;
+    display: flex;
+    height: 100vh;
+  }
 
-    .right {
-      width: 40%;
-      background: white;
-      padding: 60px 40px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      position: relative;
-    }
+  .left {
+    flex: 1;
+    background: url('BG.png') no-repeat center center;
+    background-size: cover;
+  }
 
-    .right img {
-      position: absolute;
-      top: 30px;
-      right: 30px;
-      width: 60px;
-    }
+  .right {
+    width: 40%;
+    background: white;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+  }
 
-    .right h1 {
-      margin-bottom: 10px;
-    }
+  .right img {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 60px;
+  }
 
-    .right p {
-      color: #444;
-      font-size: 14px;
-    }
+  .right h1 {
+    margin: 0 0 10px 0;
+    font-size: 22px;
+  }
 
-    .buttons {
-      margin-top: 30px;
-    }
+  .right p {
+    color: #444;
+    font-size: 14px;
+    margin: 0 0 40px 0;
+    max-width: 300px;
+  }
 
-    .buttons button {
-      padding: 12px 20px;
-      margin-right: 10px;
-      border-radius: 20px;
-      border: none;
-      cursor: pointer;
-      font-size: 14px;
-    }
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 280px;
+  }
 
-    .primary {
-      background: #2a72de;
-      color: white;
-    }
+  .buttons button {
+    padding: 12px 20px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
 
-    .secondary {
-      background: #eee;
-    }
-  </style>
+  .primary {
+    background: #2a72de;
+    color: white;
+  }
+
+  .primary:hover {
+    background: #1750a8;
+  }
+
+  .secondary {
+    background: #eeeeee;
+    color: #333;
+  }
+
+  .secondary:hover {
+    background: #ddd;
+  }
+</style>
+
 </head>
 <body>
   <div class="left"></div>
