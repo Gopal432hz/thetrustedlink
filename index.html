@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Trusted Link</title>
   <style>
     * {
@@ -10,13 +10,13 @@
     }
     body {
       margin: 0;
-      font-family: sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       height: 100vh;
     }
     .left {
       flex: 1;
-      background-image: url('BG.png'); /* Make sure BG.png exists */
+      background-image: url('BG.png');
       background-size: cover;
       background-position: center;
     }
@@ -37,33 +37,44 @@
       width: 50px;
     }
     h1 {
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+      font-size: 28px;
     }
     p {
-      max-width: 300px;
-      margin-bottom: 40px;
-      font-size: 14px;
+      max-width: 320px;
+      margin-bottom: 30px;
+      font-size: 15px;
       color: #555;
+      line-height: 1.5;
     }
     .btn {
       padding: 12px 20px;
-      border-radius: 20px;
+      border-radius: 8px;
       border: none;
-      font-weight: bold;
+      font-weight: 600;
       cursor: pointer;
-      margin-bottom: 10px;
-      width: 220px;
+      margin-bottom: 12px;
+      width: 100%;
+      max-width: 260px;
       text-align: center;
       text-decoration: none;
       display: inline-block;
+      font-size: 15px;
+      transition: background-color 0.2s ease;
     }
     .btn-primary {
       background-color: #2a72de;
       color: white;
     }
+    .btn-primary:hover {
+      background-color: #1f5ec3;
+    }
     .btn-secondary {
-      background-color: #d9d9d9;
-      color: black;
+      background-color: #e0e0e0;
+      color: #222;
+    }
+    .btn-secondary:hover {
+      background-color: #d5d5d5;
     }
   </style>
 </head>
