@@ -5,40 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Your Trusted Network</title>
   <style>
-    * { box-sizing: border-box; }
-    body { font-family: sans-serif; margin: 0; padding: 0; background: #f4f4f9; display: flex; height: 100vh; }
-    .sidebar {
-      width: 30%; background: white; padding: 30px 20px; display: flex; flex-direction: column; align-items: center;
-      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
-    }
-    .sidebar img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; }
-    .sidebar h2 { margin: 15px 0 5px; }
-    .sidebar p { margin: 4px 0; color: #555; text-align: center; }
-    .sidebar button { margin-top: 10px; padding: 10px 16px; background: #2a72de; color: white; border: none;
-      border-radius: 6px; cursor: pointer; font-size: 14px;
-    }
-    .sidebar button.secondary { background: #ccc; color: #222; }
-    .main { flex: 1; padding: 30px 40px; display: flex; flex-direction: column; }
-    .main-header { display: flex; justify-content: space-between; align-items: center; }
-    .main-header h2 { margin: 0; }
-    .tabs { display: flex; margin: 20px 0; }
-    .tab { padding: 10px 16px; border: 1px solid #ccc; border-bottom: none; background: white; margin-right: 8px;
-      border-radius: 6px 6px 0 0; cursor: pointer;
-    }
-    .tab.active { font-weight: bold; border-bottom: 2px solid #2a72de; }
-    .tab-content { background: white; padding: 20px; border-radius: 0 0 6px 6px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); flex: 1;
-    }
-    .logo { height: 40px; }
-    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5);
-      justify-content: center; align-items: center;
-    }
-    .modal-content { background: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 400px; }
-    .modal-content input, .modal-content textarea {
-      width: 100%; margin-top: 10px; padding: 10px; border-radius: 6px; border: 1px solid #ccc;
-    }
-    .modal-content button { margin-top: 15px; padding: 10px 20px; background: #2a72de; color: white;
-      border: none; border-radius: 6px; cursor: pointer;
+    /* ... existing styles ... */
+    .referral-box {
+      margin-top: 10px;
+      padding: 10px;
+      background: #f0f0f0;
+      font-size: 12px;
+      border-radius: 6px;
+      word-break: break-all;
+      text-align: center;
     }
   </style>
 </head>
@@ -51,37 +26,12 @@
     <p id="bio">Loading...</p>
     <p>✅ Verified by 3 trusted nodes</p>
     <button id="editBtn">Edit Profile</button>
-    <button class="secondary">Copy Trusted Profile Link</button>
+    <button class="secondary" onclick="copyReferral()">Copy Trusted Profile Link</button>
+    <div class="referral-box" id="referralLinkBox" style="display:none;"></div>
     <button class="secondary" onclick="logout()">Logout</button>
   </div>
 
-  <div class="main">
-    <div class="main-header">
-      <h2>Your Trusted Network</h2>
-      <img src="/logo.png" alt="Logo" class="logo" />
-    </div>
-
-    <div class="tabs">
-      <div class="tab active" data-tab="network">Your Trusted Network</div>
-      <div class="tab" data-tab="connected">Connected</div>
-      <div class="tab" data-tab="requests">Requests Received</div>
-    </div>
-
-    <div class="tab-content" id="network"> <p>Growth tools — Coming soon</p> </div>
-    <div class="tab-content" id="connected" style="display:none;"> <p>No connections yet.</p> </div>
-    <div class="tab-content" id="requests" style="display:none;"> <p>No requests yet.</p> </div>
-  </div>
-
-  <div class="modal" id="editModal">
-    <div class="modal-content">
-      <h3>Edit Profile</h3>
-      <input id="editName" placeholder="Full Name" />
-      <input id="editRole" placeholder="Current Role" />
-      <input id="editCompany" placeholder="Company" />
-      <textarea id="editBio" placeholder="Bio"></textarea>
-      <button id="saveProfile">Save Changes</button>
-    </div>
-  </div>
+  <!-- ... rest unchanged ... -->
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -154,10 +104,9 @@
       }
     });
 
-    // Tab switch logic
+    // Tab switching
     const tabs = document.querySelectorAll(".tab");
     const contents = document.querySelectorAll(".tab-content");
-
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
         tabs.forEach(t => t.classList.remove("active"));
@@ -172,6 +121,17 @@
     window.logout = function () {
       localStorage.removeItem("email");
       window.location.href = "index.html";
+    }
+
+    // Copy referral link
+    window.copyReferral = function () {
+      if (!email) return;
+      const link = `https://thetrustedlink.com/create.html?referrer=${encodeURIComponent(email)}`;
+      navigator.clipboard.writeText(link).then(() => {
+        const box = document.getElementById("referralLinkBox");
+        box.style.display = "block";
+        box.innerText = "Copied: " + link;
+      });
     }
   </script>
 </body>
