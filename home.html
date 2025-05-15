@@ -91,9 +91,9 @@
     .sidebar button {
       width: 65%;
       padding: 12px 24px;
-      background: #2a72de;
-      color: white;
-      border: none;
+      background: #f8f9fa;
+      color: #333;
+      border: 1px solid #e0e0e0;
       border-radius: 50px;
       cursor: pointer;
       font-size: 15px;
@@ -105,6 +105,9 @@
     }
     
     .sidebar button:hover {
+      background: #2a72de;
+      color: white;
+      border-color: #2a72de;
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(42,114,222,0.25);
     }
@@ -116,8 +119,11 @@
     }
 
     .sidebar button.secondary:hover {
-      background: #ffffff;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      background: #2a72de;
+      color: white;
+      border-color: #2a72de;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(42,114,222,0.25);
     }
 
     #saveProfile {
@@ -354,6 +360,57 @@
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(42,114,222,0.25);
     }
+
+    .profile-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 8px 0;
+      width: 65%;
+    }
+
+    .profile-actions button {
+      flex: 1;
+      margin: 0;
+      background: #f8f9fa;
+      color: #333;
+      border: 1px solid #e0e0e0;
+    }
+
+    .profile-actions button:hover {
+      background: #2a72de;
+      color: white;
+      border-color: #2a72de;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(42,114,222,0.25);
+    }
+
+    .icon-button {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f8f9fa;
+      border: 1px solid #e0e0e0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #666;
+      font-size: 15px;
+      padding: 0;
+      margin: 0;
+      text-decoration: none;
+    }
+
+    .icon-button:hover {
+      background: #2a72de;
+      color: white;
+      border-color: #2a72de;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(42,114,222,0.25);
+    }
   </style>
 </head>
 <body>
@@ -361,18 +418,23 @@
   <div class="sidebar">
     <img id="avatar" src="" alt="Profile Photo" />
     <h2 id="name">Loading...</h2>
-    <p class="profile-info"><span class="info-label">ROLE:</span><span id="role">Loading...</span></p>
-    <p class="profile-info"><span class="info-label">COMPANY:</span><span id="company">Loading...</span></p>
-    <p class="profile-info"><span class="info-label">BIO:</span><span id="bio">Loading...</span></p>
-    <p class="verification-text">✅ Verified by 3 trusted Link</p>
-    <div class="star-rating">
+    <div class="rating-section">
       <div class="stars">★★★★☆</div>
       <span class="rating-number">4.5</span>
     </div>
-    <button id="editBtn">Edit Profile</button>
+    <p class="verification-text">✅ Verified by 3 trusted Link</p>
+    <p class="profile-info"><span class="info-label">ROLE:</span><span id="role">Loading...</span></p>
+    <p class="profile-info"><span class="info-label">COMPANY:</span><span id="company">Loading...</span></p>
+    <p class="profile-info"><span class="info-label">BIO:</span><span id="bio">Loading...</span></p>
+    <div class="profile-actions">
+      <button id="editBtn">Edit Profile</button>
+      <a class="icon-button" id="viewPublicProfile" title="View Public Profile" target="_blank">
+        🌐
+      </a>
+    </div>
     <button class="secondary" onclick="copyReferral()">Copy Trusted Profile Link</button>
-    <div class="referral-box" id="referralLinkBox"></div>
     <button class="secondary" onclick="logout()">Logout</button>
+    <div class="referral-box" id="referralLinkBox"></div>
   </div>
 
   <div class="main">
@@ -444,14 +506,15 @@ if (!email) {
       const q = query(collection(db, "profiles"), where("email", "==", email));
       const snapshot = await getDocs(q);
       if (!snapshot.empty) {
-        const docSnap = snapshot.docs[0];
-        const data = docSnap.data();
-        profileId = docSnap.id;
+        const data = snapshot.docs[0].data();
         document.getElementById("name").innerText = data.fullName || "Name";
         document.getElementById("role").innerText = data.role || "Not specified";
         document.getElementById("company").innerText = data.company || "Not specified";
         document.getElementById("bio").innerText = data.bio || "Not specified";
         document.getElementById("avatar").src = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.fullName)}&background=2a72de&color=fff`;
+
+        // Set up public profile link
+        document.getElementById("viewPublicProfile").href = `profile.html?email=${encodeURIComponent(email)}`;
 
         document.getElementById("editName").value = data.fullName || "";
         document.getElementById("editRole").value = data.role || "";
