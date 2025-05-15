@@ -169,30 +169,79 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 30px;
+    }
+    .main-header h2 {
+      font-size: 32px;
+      color: #333;
+      font-weight: 600;
+      margin: 0;
+      letter-spacing: -0.5px;
     }
     .tabs {
       display: flex;
-      margin: 20px 0;
+      margin: 0 0 25px;
+      gap: 2px;
+      position: relative;
+      padding-bottom: 0;
     }
     .tab {
-      padding: 10px 16px;
-      border: 1px solid #ccc;
-      border-bottom: none;
-      background: white;
-      margin-right: 8px;
-      border-radius: 6px 6px 0 0;
+      padding: 14px 28px;
+      background: transparent;
+      color: #666;
+      font-size: 16px;
+      font-weight: 500;
+      border: none;
+      border-radius: 8px 8px 0 0;
       cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      margin-bottom: -1px;
+    }
+    .tab:hover {
+      color: #2a72de;
+      background: rgba(42, 114, 222, 0.05);
+    }
+    .tab::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: transparent;
+      transition: all 0.3s ease;
     }
     .tab.active {
-      font-weight: bold;
-      border-bottom: 2px solid #2a72de;
+      color: #2a72de;
+      background: white;
+      font-weight: 600;
+      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.03);
+    }
+    .tab.active::after {
+      background: #2a72de;
     }
     .tab-content {
       background: white;
-      padding: 20px;
-      border-radius: 0 0 6px 6px;
+      padding: 35px;
+      border-radius: 0 8px 8px 8px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      flex: 1;
+      min-height: 300px;
+      margin-top: -1px;
+      border-top: 1px solid #e0e0e0;
+    }
+    .empty-state {
+      text-align: center;
+      color: #666;
+      font-size: 16px;
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+      color: #2a72de;
+      opacity: 0.8;
     }
     .logo-img {
       height: 40px;
@@ -335,9 +384,23 @@
       <div class="tab" data-tab="tab-connected">Mutual Link</div>
       <div class="tab" data-tab="tab-requests">Link Requests</div>
     </div>
-    <div id="tab-network" class="tab-content">Your verified connections will appear here.</div>
-    <div id="tab-connected" class="tab-content" style="display:none;">Connected users shown here.</div>
+    <div id="tab-network" class="tab-content">
+      <div class="empty-state">
+        <div class="empty-state-icon">🤝</div>
+        <p>Your verified connections will appear here.<br>Start building your trusted network!</p>
+      </div>
+    </div>
+    <div id="tab-connected" class="tab-content" style="display:none;">
+      <div class="empty-state">
+        <div class="empty-state-icon">🔄</div>
+        <p>Your mutual connections will be shown here.<br>Connect with more professionals to grow your network.</p>
+      </div>
+    </div>
     <div id="tab-requests" class="tab-content" style="display:none;">
+      <div class="empty-state">
+        <div class="empty-state-icon">📨</div>
+        <p>No pending link requests.<br>Your connection requests will appear here.</p>
+      </div>
       <ul id="requestList"></ul>
     </div>
   </div>
