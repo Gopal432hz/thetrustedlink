@@ -56,12 +56,12 @@
     .profile-info {
       margin: 12px 0;
       color: #555;
-      text-align: left;
       width: 100%;
+      text-align: center;
       display: flex;
-      align-items: baseline;
-      gap: 0;
-      padding: 0 15px;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
     .info-label {
       font-weight: 600;
@@ -69,12 +69,9 @@
       text-transform: uppercase;
       font-size: 13px;
       letter-spacing: 0.5px;
-      min-width: 100px;
-      flex-shrink: 0;
     }
     .profile-info span:last-child {
-      flex: 1;
-      line-height: 1.4;
+      color: #666;
     }
     .star-rating {
       display: flex;
@@ -420,6 +417,29 @@
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(42,114,222,0.25);
     }
+
+    .rating-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .stars {
+      color: #ffd700;
+      font-size: 20px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+    }
+    .rating-number {
+      font-size: 16px;
+      color: #333;
+      font-weight: 500;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
@@ -430,8 +450,8 @@
     <img id="avatar" src="" alt="Profile Photo" />
     <h2 id="name">Loading...</h2>
     <div class="rating-section">
-      <div class="stars">★★★★☆</div>
       <span class="rating-number">4.5</span>
+      <div class="stars">★★★★☆</div>
     </div>
     <p class="verification-text">✅ Verified by 3 trusted Link</p>
     <p class="profile-info"><span class="info-label">ROLE:</span><span id="role">Loading...</span></p>
