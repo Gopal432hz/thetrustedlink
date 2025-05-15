@@ -198,8 +198,12 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-
-    const email = localStorage.getItem("email");
+    let email = new URLSearchParams(window.location.search).get("email");
+if (!email) {
+  email = localStorage.getItem("email");
+} else {
+  localStorage.setItem("email", email); // save for future use
+}
     let profileId = null;
 
     async function loadProfile() {
