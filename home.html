@@ -53,20 +53,96 @@
       color: #555;
       text-align: center;
     }
+    .profile-info {
+      margin: 4px 0;
+      color: #555;
+      text-align: center;
+      width: 100%;
+    }
+    .info-label {
+      font-weight: 600;
+      color: #333;
+      margin-right: 4px;
+      text-transform: uppercase;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+    }
+    .star-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .stars {
+      color: #ffd700;
+      font-size: 20px;
+    }
+    .rating-number {
+      font-size: 16px;
+      color: #333;
+      font-weight: 500;
+    }
+    .verification-text {
+      color: #28a745;
+      margin: 12px 0 8px;
+      font-size: 14px;
+    }
     .sidebar button {
-      margin-top: 10px;
-      padding: 10px 16px;
+      width: 65%;
+      padding: 12px 24px;
       background: #2a72de;
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 50px;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 15px;
+      margin: 8px auto;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
+    
+    .sidebar button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(42,114,222,0.25);
+    }
+
     .sidebar button.secondary {
-      background: #ccc;
-      color: #222;
+      background: #f8f9fa;
+      color: #333;
+      border: 1px solid #e0e0e0;
     }
+
+    .sidebar button.secondary:hover {
+      background: #ffffff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    #saveProfile {
+      width: 50%;
+      padding: 12px 24px;
+      background: #2a72de;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 15px;
+      margin: 20px auto;
+      display: block;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    #saveProfile:hover {
+      background: #1f5ec3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(42,114,222,0.25);
+    }
+
     .referral-box {
       margin-top: 10px;
       padding: 10px;
@@ -134,9 +210,20 @@
       background: #2a72de;
       color: white;
       border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
+      padding: 10px 20px;
+      border-radius: 50px;
       cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .request-item button:hover {
+      background: #1f5ec3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(42,114,222,0.25);
     }
   </style>
 </head>
@@ -145,10 +232,14 @@
   <div class="sidebar">
     <img id="avatar" src="" alt="Profile Photo" />
     <h2 id="name">Loading...</h2>
-    <p id="role">Loading...</p>
-    <p id="company">Loading...</p>
-    <p id="bio">Loading...</p>
-    <p>✅ Verified by 3 trusted Link</p>
+    <p class="profile-info"><span class="info-label">ROLE:</span><span id="role">Loading...</span></p>
+    <p class="profile-info"><span class="info-label">COMPANY:</span><span id="company">Loading...</span></p>
+    <p class="profile-info"><span class="info-label">BIO:</span><span id="bio">Loading...</span></p>
+    <p class="verification-text">✅ Verified by 3 trusted Link</p>
+    <div class="star-rating">
+      <div class="stars">★★★★☆</div>
+      <span class="rating-number">4.5</span>
+    </div>
     <button id="editBtn">Edit Profile</button>
     <button class="secondary" onclick="copyReferral()">Copy Trusted Profile Link</button>
     <div class="referral-box" id="referralLinkBox"></div>
@@ -214,9 +305,9 @@ if (!email) {
         const data = docSnap.data();
         profileId = docSnap.id;
         document.getElementById("name").innerText = data.fullName || "Name";
-        document.getElementById("role").innerText = data.role || "";
-        document.getElementById("company").innerText = data.company || "";
-        document.getElementById("bio").innerText = data.bio || "";
+        document.getElementById("role").innerText = data.role || "Not specified";
+        document.getElementById("company").innerText = data.company || "Not specified";
+        document.getElementById("bio").innerText = data.bio || "Not specified";
         document.getElementById("avatar").src = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.fullName)}&background=2a72de&color=fff`;
 
         document.getElementById("editName").value = data.fullName || "";
@@ -300,11 +391,8 @@ if (!email) {
 
     window.copyReferral = function () {
       const link = `https://thetrustedlink.com/create.html?referrer=${encodeURIComponent(email)}`;
-      const box = document.getElementById("referralLinkBox");
       navigator.clipboard.writeText(link).then(() => {
-        box.classList.add("show");
-        box.innerText = "Copied: " + link;
-        setTimeout(() => box.classList.remove("show"), 3000);
+        alert("Profile link copied!");
       });
     };
   </script>
