@@ -506,6 +506,7 @@ if (!email) {
       const q = query(collection(db, "profiles"), where("email", "==", email));
       const snapshot = await getDocs(q);
       if (!snapshot.empty) {
+        profileId = snapshot.docs[0].id;
         const data = snapshot.docs[0].data();
         document.getElementById("name").innerText = data.fullName || "Name";
         document.getElementById("role").innerText = data.role || "Not specified";
@@ -563,6 +564,13 @@ if (!email) {
       document.getElementById("editModal").style.display = "flex";
     });
 
+    // Close modal when clicking outside
+    document.getElementById("editModal").addEventListener("click", (e) => {
+      if (e.target === document.getElementById("editModal")) {
+        document.getElementById("editModal").style.display = "none";
+      }
+    });
+
     document.getElementById("saveProfile").addEventListener("click", async () => {
       if (!profileId) return;
       const ref = doc(db, "profiles", profileId);
@@ -574,6 +582,7 @@ if (!email) {
       };
       try {
         await updateDoc(ref, updated);
+        document.getElementById("editModal").style.display = "none";
         window.location.reload();
       } catch (err) {
         console.error("Error updating profile:", err);
