@@ -57,7 +57,7 @@
     .btn {
       padding: 16px 32px;
       border-radius: 50px;
-      border: none;
+      border: 1px solid #e0e0e0;
       font-weight: 500;
       cursor: pointer;
       margin-bottom: 16px;
@@ -70,27 +70,16 @@
       transition: all 0.3s ease;
       letter-spacing: 0.3px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .btn-primary {
-      background-color: #2a72de;
-      color: white;
-      position: relative;
-      overflow: hidden;
-    }
-    .btn-primary:hover {
-      background-color: #1f5ec3;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(42,114,222,0.25);
-    }
-    .btn-secondary {
       background-color: #f8f9fa;
       color: #333;
-      border: 1px solid #e0e0e0;
     }
-    .btn-secondary:hover {
-      background-color: #ffffff;
+
+    .btn:hover {
+      background: #2a72de;
+      color: white;
+      border-color: #2a72de;
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      box-shadow: 0 4px 12px rgba(42,114,222,0.25);
     }
     @media (max-width: 768px) {
       body {
@@ -144,6 +133,33 @@
         margin-bottom: 12px;
       }
     }
+
+    button {
+      width: 60%;
+      padding: 14px 28px;
+      background: #f8f9fa;
+      color: #333;
+      border: 1px solid #e0e0e0;
+      border-radius: 50px;
+      font-size: 15px;
+      cursor: pointer;
+      margin-top: 20px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    button:hover {
+      background: #2a72de;
+      color: white;
+      border-color: #2a72de;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(42,114,222,0.25);
+    }
   </style>
 </head>
 <body>
@@ -156,8 +172,8 @@
     <p>
       A verified referral network for hiring, partnerships, and outreach — built on trust and real connections.
     </p>
-    <a href="login.html" class="btn btn-primary">Login to Existing Account</a>
-    <a href="create.html" class="btn btn-secondary">Create an Account</a>
+    <a href="login.html" class="btn">Login to Existing Account</a>
+    <a href="create.html" class="btn">Create an Account</a>
   </div>
 
   <script>
