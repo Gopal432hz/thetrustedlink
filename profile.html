@@ -260,6 +260,9 @@
   </style>
 </head>
 <body>
+  <a href="#" onclick="handleLogoClick(event)">
+    <img class="logo" src="logo.png" alt="Logo" style="position: absolute; top: 30px; right: 40px; width: 50px; height: 50px; border-radius: 50%; background: white; padding: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); object-fit: cover; z-index: 999;" />
+  </a>
   <div class="container">
     <div class="profile-section">
       <img id="avatar" class="avatar" src="" alt="Profile" />
@@ -401,6 +404,16 @@
 
       alert("Intro request sent!");
     });
+
+    window.handleLogoClick = function(e) {
+      e.preventDefault();
+      const email = localStorage.getItem("email");
+      if (email) {
+        window.location.href = `home.html?email=${encodeURIComponent(email)}`;
+      } else {
+        window.location.href = "index.html";
+      }
+    };
   </script>
 </body>
 </html>

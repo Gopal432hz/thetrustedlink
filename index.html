@@ -149,7 +149,9 @@
 <body>
   <div class="left"></div>
   <div class="right">
-    <img class="logo" src="logo.png" alt="Logo" />
+    <a href="#" onclick="handleLogoClick(event)">
+      <img class="logo" src="logo.png" alt="Logo" />
+    </a>
     <h1>The Trusted Link</h1>
     <p>
       A verified referral network for hiring, partnerships, and outreach — built on trust and real connections.
@@ -157,5 +159,17 @@
     <a href="login.html" class="btn btn-primary">Login to Existing Account</a>
     <a href="create.html" class="btn btn-secondary">Create an Account</a>
   </div>
+
+  <script>
+    function handleLogoClick(e) {
+      e.preventDefault();
+      const email = localStorage.getItem("email");
+      if (email) {
+        window.location.href = `home.html?email=${encodeURIComponent(email)}`;
+      } else {
+        window.location.href = "index.html";
+      }
+    }
+  </script>
 </body>
 </html>

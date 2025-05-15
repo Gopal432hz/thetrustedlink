@@ -201,7 +201,9 @@
 <body>
   <div class="left"></div>
   <div class="right">
-    <img class="logo" src="logo.png" alt="Logo" />
+    <a href="#" onclick="handleLogoClick(event)">
+      <img class="logo" src="logo.png" alt="Logo" />
+    </a>
     <div class="container">
       <h1>The Trusted Link</h1>
       <p class="description">
@@ -277,6 +279,16 @@
         }
       });
     });
+
+    window.handleLogoClick = function(e) {
+      e.preventDefault();
+      const email = localStorage.getItem("email");
+      if (email) {
+        window.location.href = `home.html?email=${encodeURIComponent(email)}`;
+      } else {
+        window.location.href = "index.html";
+      }
+    };
   </script>
 </body>
 </html>
