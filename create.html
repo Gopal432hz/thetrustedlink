@@ -58,13 +58,13 @@
       width: 100%;
       max-width: 600px;
       padding: 0 20px;
-      margin-top: 40px;
+      margin-top: 20px;
     }
 
     h1 {
       text-align: center;
       color: #222;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       font-size: 36px;
       font-weight: bold;
       line-height: 1.2;
@@ -73,7 +73,7 @@
     .description {
       text-align: center;
       color: #555;
-      margin-bottom: 40px;
+      margin-bottom: 25px;
       font-size: 18px;
       line-height: 1.5;
       max-width: 600px;
@@ -81,53 +81,105 @@
       margin-right: auto;
     }
 
-    .input-group {
-      position: relative;
-      margin: 15px 0;
-    }
-
-    input,
-    textarea {
+    .signup-box {
       width: 100%;
-      padding: 14px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 15px;
-      margin: 0;
-      background-color: #fff;
+      max-width: 400px;
+      padding: 20px;
+      margin-top: -10px;
     }
 
-    input::placeholder,
-    textarea::placeholder {
+    .input-group:first-child {
+      margin-top: 10px;
+    }
+
+    h2 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .input-group label {
+      display: block;
       color: #666;
+      font-size: 14px;
+      margin-bottom: 4px;
     }
 
-    textarea {
-      min-height: 100px;
+    .input-group input {
+      width: 100%;
+      padding: 6px 0;
+      font-size: 15px;
+      border: none;
+      border-bottom: 1px solid #ddd;
+      background: transparent;
+      transition: all 0.3s ease;
+      color: #333;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-bottom-color: #2a72de;
+    }
+
+    .input-group input::placeholder {
+      color: transparent;
+    }
+
+    .input-textarea {
+      width: 100%;
+      padding: 6px 0;
+      font-size: 15px;
+      border: none;
+      border-bottom: 1px solid #ddd;
+      background: transparent;
+      transition: all 0.3s ease;
+      color: #333;
+      min-height: 60px;
       resize: vertical;
     }
 
+    .input-textarea:focus {
+      outline: none;
+      border-bottom-color: #2a72de;
+    }
+
     button {
-      width: 60%;
-      padding: 16px 32px;
+      width: 75%;
+      padding: 14px 28px;
       background: #2a72de;
       color: white;
       border: none;
       border-radius: 50px;
-      font-size: 16px;
+      font-size: 15px;
       cursor: pointer;
-      margin: 25px auto;
-      display: block;
+      margin-top: 24px;
       transition: all 0.3s ease;
+      font-weight: 500;
       letter-spacing: 0.3px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      font-weight: 500;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      white-space: nowrap;
     }
 
     button:hover {
       background: #1f5ec3;
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(42,114,222,0.25);
+    }
+
+    .error {
+      color: #dc3545;
+      font-size: 14px;
+      margin-top: 4px;
+      display: none;
     }
 
     @media (max-width: 768px) {
@@ -209,30 +261,40 @@
       <p class="description">
         A verified referral network for hiring, partnerships, and outreach — built on trust and real connections.
       </p>
-      <form id="createForm">
-        <div class="input-group">
-          <input name="fullName" type="text" placeholder="Full Name" required />
-        </div>
-        <div class="input-group">
-          <input name="email" type="email" placeholder="Email Address" required />
-        </div>
-        <div class="input-group">
-          <input name="password" type="password" placeholder="Create Password" required />
-        </div>
-        <div class="input-group">
-          <input name="linkedin" type="url" placeholder="LinkedIn Profile" />
-        </div>
-        <div class="input-group">
-          <input name="role" type="text" placeholder="Current Role" />
-        </div>
-        <div class="input-group">
-          <input name="company" type="text" placeholder="Company" />
-        </div>
-        <div class="input-group">
-          <textarea name="bio" placeholder="Short Bio / About You"></textarea>
-        </div>
-        <button type="submit">Create My Trusted Profile</button>
-      </form>
+      <div class="signup-box">
+        <form id="signupForm">
+          <div class="input-group">
+            <label>Full Name</label>
+            <input type="text" id="name" name="fullName" required />
+          </div>
+          <div class="input-group">
+            <label>Email Address</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+          <div class="input-group">
+            <label>LinkedIn Profile Link</label>
+            <input type="url" id="linkedin" name="linkedin" placeholder="https://www.linkedin.com/in/your-profile" />
+          </div>
+          <div class="input-group">
+            <label>Current Role</label>
+            <input type="text" id="role" name="role" />
+          </div>
+          <div class="input-group">
+            <label>Company Name</label>
+            <input type="text" id="company" name="company" />
+          </div>
+          <div class="input-group">
+            <label>Short Bio / About You</label>
+            <textarea id="bio" name="bio" class="input-textarea"></textarea>
+          </div>
+          <button type="submit">Create My Trusted Profile</button>
+          <p class="error" id="errorMsg"></p>
+        </form>
+      </div>
     </div>
   </div>
 
@@ -254,7 +316,7 @@
     const db = getFirestore(app);
 
     window.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById("createForm");
+      const form = document.getElementById("signupForm");
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
