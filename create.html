@@ -25,6 +25,20 @@
       justify-content: center;
       align-items: center;
       background: #f4f4f9;
+      position: relative;
+    }
+
+    .logo {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: white;
+      padding: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      object-fit: cover;
     }
 
     .container {
@@ -93,6 +107,7 @@
 <body>
   <div class="left"></div>
   <div class="right">
+    <img class="logo" src="logo.png" alt="Logo" />
     <div class="container">
       <h1>The Trusted Link</h1>
       <p class="description">
@@ -113,49 +128,47 @@
 
   <!-- Firebase Logic -->
   <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyAHBp0WNKNRJNoTanDsh9BaDrKNGVouLEs",
-    authDomain: "the-trusted-link.firebaseapp.com",
-    projectId: "the-trusted-link",
-    storageBucket: "the-trusted-link.appspot.com",
-    messagingSenderId: "110160882414",
-    appId: "1:110160882414:web:e1871feef034c49361a1ff"
-  };
+    const firebaseConfig = {
+      apiKey: "AIzaSyAHBp0WNKNRJNoTanDsh9BaDrKNGVouLEs",
+      authDomain: "the-trusted-link.firebaseapp.com",
+      projectId: "the-trusted-link",
+      storageBucket: "the-trusted-link.appspot.com",
+      messagingSenderId: "110160882414",
+      appId: "1:110160882414:web:e1871feef034c49361a1ff"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-  // ✅ Wait for DOM to fully load before adding event listener
-  window.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById("createForm");
+    window.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById("createForm");
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-      const data = {
-        fullName: form.fullName.value,
-        email: form.email.value,
-        password: form.password.value,
-        linkedin: form.linkedin.value,
-        role: form.role.value,
-        company: form.company.value,
-        bio: form.bio.value,
-        timestamp: new Date()
-      };
+        const data = {
+          fullName: form.fullName.value,
+          email: form.email.value,
+          password: form.password.value,
+          linkedin: form.linkedin.value,
+          role: form.role.value,
+          company: form.company.value,
+          bio: form.bio.value,
+          timestamp: new Date()
+        };
 
-      try {
-        await addDoc(collection(db, "profiles"), data);
-        window.location.href = `home.html?email=${encodeURIComponent(data.email)}`;
-      } catch (err) {
-        console.error("Error adding document:", err);
-        alert("Something went wrong. Please try again.");
-      }
+        try {
+          await addDoc(collection(db, "profiles"), data);
+          window.location.href = `home.html?email=${encodeURIComponent(data.email)}`;
+        } catch (err) {
+          console.error("Error adding document:", err);
+          alert("Something went wrong. Please try again.");
+        }
+      });
     });
-  });
-</script>
-
+  </script>
 </body>
 </html>
