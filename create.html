@@ -3,30 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Trusted Link</title>
+  <title>Create Account | The Trusted Link</title>
   <link rel="icon" type="image/png" href="favicon.png" />
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
       display: flex;
       height: 100vh;
+      min-height: 100vh;
       overflow: hidden;
     }
 
     .left {
       flex: 1;
-      background: url('BG.png') no-repeat center center/cover;
+      background-image: url('BG.png');
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
     }
 
     .right {
-      flex: 1;
+      width: 40%;
+      padding: 60px 40px;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: #f4f4f9;
+      background: white;
       position: relative;
+      min-height: 100vh;
+      overflow-y: auto;
     }
 
     .logo {
@@ -38,69 +50,76 @@
       border-radius: 50%;
       background: white;
       padding: 6px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       object-fit: cover;
     }
 
     .container {
-      width: 90%;
-      max-width: 500px;
-      background: white;
-      padding: 30px;
-      border-radius: 25px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
     }
 
-    .container h1 {
+    h1 {
       text-align: center;
       color: #222;
       margin-bottom: 10px;
+      font-size: 24px;
     }
 
-    .container p.description {
+    .description {
       text-align: center;
       color: #555;
       margin-bottom: 20px;
+      font-size: 15px;
+      line-height: 1.5;
     }
 
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
+    .input-group {
+      position: relative;
+      margin: 10px 0;
     }
 
     input,
     textarea {
       width: 100%;
-      padding: 10px;
-      margin-top: 5px;
+      padding: 12px;
+      border-radius: 8px;
       border: 1px solid #ccc;
-      border-radius: 10px;
+      font-size: 15px;
+      margin: 8px 0;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
     }
 
     button {
-      margin-top: 20px;
-      width: 100%;
+      width: 60%;
       padding: 12px;
-      background-color: #2a72de;
+      background: #2a72de;
       color: white;
       border: none;
-      border-radius: 10px;
-      cursor: pointer;
+      border-radius: 8px;
       font-size: 16px;
+      cursor: pointer;
+      margin: 20px auto;
+      display: block;
     }
 
     button:hover {
-      background-color: #1f5ec3;
+      background: #1f5ec3;
     }
 
     @media (max-width: 768px) {
       body {
         flex-direction: column;
       }
+      .right {
+        width: 100%;
+      }
       .left {
-        height: 200px;
-        padding: 20px;
+        display: none;
       }
     }
   </style>
@@ -110,18 +129,32 @@
   <div class="right">
     <img class="logo" src="logo.png" alt="Logo" />
     <div class="container">
-      <h1>The Trusted Link</h1>
+      <h1>Create Your Profile</h1>
       <p class="description">
-        A verified referral network for hiring, partnerships, and outreach — built on trust and real connections.
+        Join the verified referral network for hiring, partnerships, and outreach — built on trust and real connections.
       </p>
       <form id="createForm">
-        <input name="fullName" type="text" placeholder="Full Name" required />
-        <input name="email" type="email" placeholder="Email Address" required />
-        <input name="password" type="password" placeholder="Create Password" required />
-        <input name="linkedin" type="url" placeholder="LinkedIn Profile" />
-        <input name="role" type="text" placeholder="Current Role" />
-        <input name="company" type="text" placeholder="Company" />
-        <textarea name="bio" placeholder="Short Bio / About You"></textarea>
+        <div class="input-group">
+          <input name="fullName" type="text" placeholder="Full Name" required />
+        </div>
+        <div class="input-group">
+          <input name="email" type="email" placeholder="Email Address" required />
+        </div>
+        <div class="input-group">
+          <input name="password" type="password" placeholder="Create Password" required />
+        </div>
+        <div class="input-group">
+          <input name="linkedin" type="url" placeholder="LinkedIn Profile" />
+        </div>
+        <div class="input-group">
+          <input name="role" type="text" placeholder="Current Role" />
+        </div>
+        <div class="input-group">
+          <input name="company" type="text" placeholder="Company" />
+        </div>
+        <div class="input-group">
+          <textarea name="bio" placeholder="Short Bio / About You"></textarea>
+        </div>
         <button type="submit">Create My Trusted Profile</button>
       </form>
     </div>
