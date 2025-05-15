@@ -90,15 +90,87 @@
     </div>
 
     <div class="actions">
-      <button class="trust">Send Trust Request</button>
-      <button class="intro">Get Introduced</button>
+      <button class="trust" id="sendTrust">Send Trust Request</button>
+      <button class="intro" id="requestIntro">Get Introduced</button>
     </div>
   </div>
 
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const email = urlParams.get("email");
-    // Firebase fetch logic here (to be added in next step)
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+    import { getFirestore, collection, query, where, getDocs, addDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAHBp0WNKNRJNoTanDsh9BaDrKNGVouLEs",
+      authDomain: "the-trusted-link.firebaseapp.com",
+      projectId: "the-trusted-link",
+      storageBucket: "the-trusted-link.appspot.com",
+      messagingSenderId: "110160882414",
+      appId: "1:110160882414:web:e1871feef034c49361a1ff"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const email = new URLSearchParams(window.location.search).get('email');
+    const localUser = localStorage.getItem('email');
+
+    async function loadProfile() {
+      const q = query(collection(db, "profiles"), where("email", "==", email));
+      const snapshot = await getDocs(q);
+      if (!snapshot.empty) {
+        const data = snapshot.docs[0].data();
+        document.getElementById("name").innerText = data.fullName;
+        document.getElementById("role").innerText = data.role;
+        document.getElementById("company").innerText = data.company;
+        document.getElementById("bio").innerText = data.bio;
+        document.getElementById("avatar").src = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.fullName)}&background=2a72de&color=fff`;
+
+        // Show trusted list if 3+ nodes
+        const trusted = data.trustedBy || [];
+        document.getElementById("trust-count").innerText = trusted.length;
+        if (trusted.length >= 3) {
+          document.getElementById("trustedListSection").style.display = "block";
+          trusted.forEach(t => {
+            const li = document.createElement("li");
+            li.innerText = `${t.name} — ${t.company}`;
+            document.getElementById("trustedList").appendChild(li);
+          });
+        }
+      }
+    }
+
+    loadProfile();
+
+    // Send Trust Request
+    document.getElementById("sendTrust").addEventListener("click", async () => {
+      if (!localUser) {
+        alert("Please login first.");
+        return window.location.href = `login.html?redirect=profile.html?email=${email}`;
+      }
+      await addDoc(collection(db, "trustRequests"), {
+        targetEmail: email,
+        senderEmail: localUser,
+        timestamp: new Date()
+      });
+      alert("Trust request sent!");
+    });
+
+    // Request Intro
+    document.getElementById("requestIntro").addEventListener("click", async () => {
+      const to = prompt("Who do you want to be introduced to?");
+      const why = prompt("Why do you want this intro?");
+      if (!to || !why) return;
+
+      await addDoc(collection(db, "introRequests"), {
+        targetEmail: email,
+        fromEmail: localUser || "anonymous",
+        toPerson: to,
+        reason: why,
+        timestamp: new Date()
+      });
+
+      alert("Intro request sent!");
+    });
   </script>
 </body>
 </html>
