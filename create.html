@@ -56,37 +56,50 @@
 
     .container {
       width: 100%;
-      max-width: 400px;
+      max-width: 600px;
+      padding: 0 20px;
+      margin-top: 40px;
     }
 
     h1 {
       text-align: center;
       color: #222;
-      margin-bottom: 10px;
-      font-size: 24px;
+      margin-bottom: 20px;
+      font-size: 36px;
+      font-weight: bold;
+      line-height: 1.2;
     }
 
     .description {
       text-align: center;
       color: #555;
-      margin-bottom: 20px;
-      font-size: 15px;
+      margin-bottom: 40px;
+      font-size: 18px;
       line-height: 1.5;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .input-group {
       position: relative;
-      margin: 10px 0;
+      margin: 15px 0;
     }
 
     input,
     textarea {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       border-radius: 8px;
       border: 1px solid #ccc;
       font-size: 15px;
-      margin: 8px 0;
+      margin: 0;
+      background-color: #fff;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #666;
     }
 
     textarea {
@@ -129,9 +142,9 @@
   <div class="right">
     <img class="logo" src="logo.png" alt="Logo" />
     <div class="container">
-      <h1>Create Your Profile</h1>
+      <h1>The Trusted Link</h1>
       <p class="description">
-        Join the verified referral network for hiring, partnerships, and outreach — built on trust and real connections.
+        A verified referral network for hiring, partnerships, and outreach — built on trust and real connections.
       </p>
       <form id="createForm">
         <div class="input-group">
