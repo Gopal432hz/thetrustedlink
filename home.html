@@ -120,6 +120,23 @@
     .logo-img {
       height: 40px;
     }
+    .request-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      background: #f9f9f9;
+      padding: 10px;
+      border-radius: 6px;
+    }
+    .request-item button {
+      background: #2a72de;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -140,6 +157,7 @@
   <div class="main">
     <div class="main-header">
       <h2>Your Trusted Network</h2>
+      <img src="/logo.png" alt="Logo" class="logo-img" />
     </div>
     <div class="tabs">
       <div class="tab active" data-tab="tab-network">Your Trusted Link</div>
@@ -167,7 +185,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, query, where, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getFirestore, collection, query, where, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAHBp0WNKNRJNoTanDsh9BaDrKNGVouLEs",
@@ -209,9 +227,30 @@
       const snapshot = await getDocs(q);
       const list = document.getElementById("requestList");
       list.innerHTML = "";
-      snapshot.forEach(doc => {
+
+      snapshot.forEach(async requestDoc => {
+        const data = requestDoc.data();
         const li = document.createElement("li");
-        li.innerText = `Trust request from ${doc.data().senderEmail}`;
+        li.className = "request-item";
+        li.innerHTML = `Trust request from ${data.senderEmail} <button>Accept</button>`;
+        li.querySelector("button").addEventListener("click", async () => {
+          const userRef = doc(db, "profiles", profileId);
+          const profileSnap = await getDocs(query(collection(db, "profiles"), where("email", "==", data.senderEmail)));
+          let sender = { email: data.senderEmail };
+          if (!profileSnap.empty) {
+            const d = profileSnap.docs[0].data();
+            sender.name = d.fullName;
+            sender.company = d.company;
+          }
+
+          await updateDoc(userRef, {
+            trustedBy: [...(window.currentTrustedBy || []), sender]
+          });
+
+          await deleteDoc(doc(db, "trustRequests", requestDoc.id));
+          alert("Request accepted.");
+          loadRequests();
+        });
         list.appendChild(li);
       });
     }
