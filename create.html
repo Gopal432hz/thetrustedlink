@@ -109,19 +109,25 @@
 
     button {
       width: 60%;
-      padding: 12px;
+      padding: 16px 32px;
       background: #2a72de;
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 50px;
       font-size: 16px;
       cursor: pointer;
-      margin: 20px auto;
+      margin: 25px auto;
       display: block;
+      transition: all 0.3s ease;
+      letter-spacing: 0.3px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      font-weight: 500;
     }
 
     button:hover {
       background: #1f5ec3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(42,114,222,0.25);
     }
 
     @media (max-width: 768px) {
@@ -153,6 +159,7 @@
 
       button {
         width: 80%;
+        padding: 14px 28px;
       }
     }
 
@@ -184,7 +191,9 @@
 
       button {
         width: 100%;
-        margin: 15px auto;
+        padding: 14px 24px;
+        font-size: 15px;
+        margin: 20px auto;
       }
     }
   </style>
