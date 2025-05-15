@@ -117,7 +117,7 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       flex: 1;
     }
-    .logo {
+    .logo-img {
       height: 40px;
     }
   </style>
@@ -140,7 +140,7 @@
   <div class="main">
     <div class="main-header">
       <h2>Your Trusted Network</h2>
-      <img src="/logo.png" alt="Logo" class="logo" />
+      <img src="/logo.png" alt="Logo" class="logo-img" />
     </div>
     <div class="tabs">
       <div class="tab active" data-tab="tab-network">Your Trusted Link</div>
@@ -149,7 +149,9 @@
     </div>
     <div id="tab-network" class="tab-content">Your verified connections will appear here.</div>
     <div id="tab-connected" class="tab-content" style="display:none;">Connected users shown here.</div>
-    <div id="tab-requests" class="tab-content" style="display:none;">Trust requests will be displayed here.</div>
+    <div id="tab-requests" class="tab-content" style="display:none;">
+      <ul id="requestList"></ul>
+    </div>
   </div>
 
   <!-- Edit Profile Modal -->
@@ -180,39 +182,43 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    let email = new URLSearchParams(window.location.search).get('email');
-    if (!email) email = localStorage.getItem("email");
-    else localStorage.setItem("email", email);
-
+    const email = localStorage.getItem("email");
     let profileId = null;
 
-    if (email) {
+    async function loadProfile() {
       const q = query(collection(db, "profiles"), where("email", "==", email));
-      getDocs(q).then(snapshot => {
-        if (!snapshot.empty) {
-          const docSnap = snapshot.docs[0];
-          const data = docSnap.data();
-          profileId = docSnap.id;
-          document.getElementById("name").innerText = data.fullName || "Name";
-          document.getElementById("role").innerText = data.role || "";
-          document.getElementById("company").innerText = data.company || "";
-          document.getElementById("bio").innerText = data.bio || "";
-          document.getElementById("avatar").src = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.fullName)}&background=2a72de&color=fff`;
+      const snapshot = await getDocs(q);
+      if (!snapshot.empty) {
+        const docSnap = snapshot.docs[0];
+        const data = docSnap.data();
+        profileId = docSnap.id;
+        document.getElementById("name").innerText = data.fullName || "Name";
+        document.getElementById("role").innerText = data.role || "";
+        document.getElementById("company").innerText = data.company || "";
+        document.getElementById("bio").innerText = data.bio || "";
+        document.getElementById("avatar").src = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.fullName)}&background=2a72de&color=fff`;
 
-          document.getElementById("editName").value = data.fullName || "";
-          document.getElementById("editRole").value = data.role || "";
-          document.getElementById("editCompany").value = data.company || "";
-          document.getElementById("editBio").value = data.bio || "";
-        } else {
-          alert("Profile not found.");
-        }
-      }).catch(err => {
-        console.error("Error fetching profile:", err);
-      });
-    } else {
-      alert("No email found. Please log in.");
-      window.location.href = "login.html";
+        document.getElementById("editName").value = data.fullName || "";
+        document.getElementById("editRole").value = data.role || "";
+        document.getElementById("editCompany").value = data.company || "";
+        document.getElementById("editBio").value = data.bio || "";
+      }
     }
+
+    async function loadRequests() {
+      const q = query(collection(db, "trustRequests"), where("targetEmail", "==", email));
+      const snapshot = await getDocs(q);
+      const list = document.getElementById("requestList");
+      list.innerHTML = "";
+      snapshot.forEach(doc => {
+        const li = document.createElement("li");
+        li.innerText = `Trust request from ${doc.data().senderEmail}`;
+        list.appendChild(li);
+      });
+    }
+
+    loadProfile();
+    loadRequests();
 
     document.getElementById("editBtn").addEventListener("click", () => {
       document.getElementById("editModal").style.display = "flex";
@@ -235,12 +241,10 @@
       }
     });
 
-    const tabs = document.querySelectorAll(".tab");
-    const contents = document.querySelectorAll(".tab-content");
-    tabs.forEach(tab => {
+    document.querySelectorAll(".tab").forEach(tab => {
       tab.addEventListener("click", () => {
-        tabs.forEach(t => t.classList.remove("active"));
-        contents.forEach(c => c.style.display = "none");
+        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+        document.querySelectorAll(".tab-content").forEach(c => c.style.display = "none");
         tab.classList.add("active");
         const activeId = tab.getAttribute("data-tab");
         document.getElementById(activeId).style.display = "block";
@@ -250,18 +254,17 @@
     window.logout = function () {
       localStorage.removeItem("email");
       window.location.href = "index.html";
-    }
+    };
 
     window.copyReferral = function () {
-      if (!email) return;
       const link = `https://thetrustedlink.com/create.html?referrer=${encodeURIComponent(email)}`;
+      const box = document.getElementById("referralLinkBox");
       navigator.clipboard.writeText(link).then(() => {
-        const box = document.getElementById("referralLinkBox");
         box.classList.add("show");
         box.innerText = "Copied: " + link;
         setTimeout(() => box.classList.remove("show"), 3000);
       });
-    }
+    };
   </script>
 </body>
 </html>
