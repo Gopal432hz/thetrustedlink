@@ -3,32 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login | The Trusted Link</title>
+  <title>The Trusted Link</title>
   <link rel="icon" type="image/png" href="favicon.png" />
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       height: 100vh;
     }
-
     .left {
       flex: 1;
       background-image: url('BG.png');
       background-size: cover;
       background-position: center;
     }
-
     .right {
-      flex: 1;
+      width: 40%;
+      padding: 60px 40px;
       display: flex;
+      flex-direction: column;
       justify-content: center;
-      align-items: center;
-      background: #f4f4f9;
+      align-items: flex-start;
+      background: white;
       position: relative;
     }
-
     .logo {
       position: absolute;
       top: 30px;
@@ -41,106 +43,58 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       object-fit: cover;
     }
-
-    .login-box {
-      width: 90%;
-      max-width: 400px;
-      background: white;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    h1 {
+      margin-bottom: 12px;
+      font-size: 28px;
     }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 8px;
-      border: 1px solid #ccc;
+    p {
+      max-width: 320px;
+      margin-bottom: 30px;
       font-size: 15px;
+      color: #555;
+      line-height: 1.5;
     }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      background: #2a72de;
-      color: white;
-      border: none;
+    .btn {
+      padding: 12px 20px;
       border-radius: 8px;
-      font-size: 16px;
+      border: none;
+      font-weight: 600;
       cursor: pointer;
-      margin-top: 10px;
-    }
-
-    button:hover {
-      background: #1f5ec3;
-    }
-
-    .error {
-      color: red;
-      font-size: 14px;
+      margin-bottom: 12px;
+      width: 100%;
+      max-width: 260px;
       text-align: center;
-      margin-top: 10px;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 15px;
+      transition: background-color 0.2s ease;
+    }
+    .btn-primary {
+      background-color: #2a72de;
+      color: white;
+    }
+    .btn-primary:hover {
+      background-color: #1f5ec3;
+    }
+    .btn-secondary {
+      background-color: #e0e0e0;
+      color: #222;
+    }
+    .btn-secondary:hover {
+      background-color: #d5d5d5;
     }
   </style>
 </head>
 <body>
-
   <div class="left"></div>
-
   <div class="right">
     <img class="logo" src="logo.png" alt="Logo" />
-    <div class="login-box">
-      <h2>Welcome Back</h2>
-      <form id="loginForm">
-        <input type="email" name="email" placeholder="Email Address" required />
-        <input type="password" name="password" placeholder="Password" required />
-        <button type="submit">Enter The Network</button>
-        <p class="error" id="errorMsg"></p>
-      </form>
-    </div>
+    <h1>The Trusted Link</h1>
+    <p>
+      A verified referral network for hiring, partnerships, and outreach — built on trust and real connections.
+    </p>
+    <a href="login.html" class="btn btn-primary">Login to Existing Account</a>
+    <a href="create.html" class="btn btn-secondary">Create an Account</a>
   </div>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyAHBp0WNKNRJNoTanDsh9BaDrKNGVouLEs",
-      authDomain: "the-trusted-link.firebaseapp.com",
-      projectId: "the-trusted-link",
-      storageBucket: "the-trusted-link.appspot.com",
-      messagingSenderId: "110160882414",
-      appId: "1:110160882414:web:e1871feef034c49361a1ff"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    const form = document.getElementById("loginForm");
-    const errorMsg = document.getElementById("errorMsg");
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const email = form.email.value;
-      const password = form.password.value;
-
-      const q = query(collection(db, "profiles"), where("email", "==", email), where("password", "==", password));
-      const snapshot = await getDocs(q);
-
-      if (!snapshot.empty) {
-        window.location.href = `home.html?email=${encodeURIComponent(email)}`;
-      } else {
-        errorMsg.innerText = "Incorrect email or password.";
-      }
-    });
-  </script>
-
 </body>
 </html>
